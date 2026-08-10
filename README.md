@@ -20,5 +20,5 @@
 ## 🚀 快速开始
 
 ### 在线服务（推荐）
-访问公开实例：[[https://udith77-cyber.github.io/clash-converter/]](https://clash-converter.example.com)
+访问公开实例：https://udith77-cyber.github.io/clash-converter/
 
