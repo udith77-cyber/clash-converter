@@ -1,7 +1,7 @@
 # Clash 订阅转换工具
 
 [![GitHub release](https://img.shields.io/github/v/release/yourusername/clash-converter)](https://udith77-cyber.github.io/clash-converter/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/yourusername/clash-converter)](https://hub.docker.com/r/yourusername/clash-converter)
+[![Docker Pulls](https://img.shields.io/docker/pulls/yourusername/clash-converter)]([https://udith77-cyber.github.io/clash-converter/])
 [![License](https://img.shields.io/github/license/yourusername/clash-converter)](LICENSE)
 
 一个高性能的Clash订阅链接转换工具，支持多协议转换和规则增强。
@@ -22,13 +22,3 @@
 ### 在线服务（推荐）
 访问公开实例：[[https://udith77-cyber.github.io/clash-converter/]](https://clash-converter.example.com)
 
-### 自托管部署
-
-#### 使用 Docker（最简单）
-```bash
-docker run -d \
-  --name clash-converter \
-  -p 8080:8080 \
-  -e RULESET_MODE=full \
-  --restart unless-stopped \
-  ghcr.io/yourusername/clash-converter:latest
