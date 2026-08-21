@@ -1,408 +1,671 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Aries · 踏天境</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: linear-gradient(145deg, #d6eaf8, #a9d0e6);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      padding: 20px;
-    }
-    .glass-card {
-      max-width: 880px;
-      width: 100%;
-      background: rgba(235, 247, 255, 0.65);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border-radius: 48px;
-      padding: 32px 32px 40px;
-      box-shadow: 0 30px 60px -20px rgba(8, 60, 100, 0.4), 0 8px 20px rgba(0, 40, 70, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-    }
-    .header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 18px; }
-    .title-group { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-    .title-group h1 {
-      font-size: 2.1rem; font-weight: 600; letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #0b4463, #1d6c97);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-    .badge {
-      background: rgba(21, 94, 136, 0.18); backdrop-filter: blur(4px);
-      padding: 4px 18px; border-radius: 40px; font-size: 0.75rem; font-weight: 500;
-      color: #0f4d70; border: 1px solid rgba(255,255,255,0.5); letter-spacing: 0.4px;
-    }
-    .sub-desc {
-      color: #135172; font-size: 0.9rem; border-left: 4px solid #3287b5;
-      padding-left: 18px; background: rgba(50, 135, 181, 0.06);
-      border-radius: 0 16px 16px 0; line-height: 1.5; margin-bottom: 28px;
-      padding: 8px 16px 8px 22px;
-    }
-    .input-section { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
-    .input-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-    .input-row label { font-weight: 500; color: #0c4868; min-width: 80px; font-size: 0.9rem; letter-spacing: 0.2px; }
-    .input-row input {
-      flex: 1; min-width: 200px; padding: 14px 20px;
-      border: 1px solid rgba(60, 145, 195, 0.35); border-radius: 60px;
-      background: rgba(255,255,255,0.7); backdrop-filter: blur(4px);
-      font-size: 0.95rem; transition: 0.2s; box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
-      color: #053a55; font-weight: 450;
-    }
-    .input-row input:focus {
-      outline: none; border-color: #2a82b0; background: rgba(255,255,255,0.9);
-      box-shadow: 0 0 0 5px rgba(42, 130, 176, 0.2);
-    }
-    .input-row input::placeholder { color: #6f9ebd; font-weight: 300; }
-    .advanced-area {
-      background: rgba(200, 229, 245, 0.35); backdrop-filter: blur(4px);
-      border-radius: 24px; padding: 16px 20px;
-      border: 1px solid rgba(255,255,255,0.5);
-      display: flex; flex-direction: column; gap: 14px;
-    }
-    .adv-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
-    .adv-row label { font-size: 0.8rem; font-weight: 500; color: #0a4d70; min-width: 70px; }
-    .adv-row select {
-      padding: 8px 16px; border-radius: 40px; border: 1px solid #b2d3ea;
-      background: rgba(255,255,255,0.65); backdrop-filter: blur(4px);
-      font-size: 0.8rem; font-family: 'Inter', sans-serif; color: #043a55; transition: 0.15s;
-    }
-    .adv-row select:focus {
-      outline: none; border-color: #2a82b0; box-shadow: 0 0 0 3px rgba(42, 130, 176, 0.25);
-    }
-    .inline-hint { font-size: 0.7rem; color: #347a9e; margin-left: 4px; }
-    .action-bar {
-      display: flex; flex-wrap: wrap; gap: 14px; margin: 22px 0 18px;
-      align-items: center; justify-content: space-between;
-    }
-    .btn {
-      border: none; background: rgba(255,255,255,0.7); backdrop-filter: blur(4px);
-      padding: 12px 28px; border-radius: 60px; font-weight: 500; font-size: 0.9rem;
-      color: #0b4b6b; border: 1px solid rgba(110, 175, 210, 0.5);
-      cursor: pointer; transition: all 0.15s; display: inline-flex;
-      align-items: center; gap: 8px; letter-spacing: 0.2px; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-    }
-    .btn-primary {
-      background: #1d6f9c; border: 1px solid #13547a; color: white;
-      box-shadow: 0 8px 18px rgba(24, 86, 128, 0.3);
-    }
-    .btn-primary:hover { background: #135a82; transform: scale(0.97); box-shadow: 0 6px 14px rgba(20, 80, 120, 0.35); }
-    .btn-outline { background: transparent; border: 1px solid #8bbddb; }
-    .btn-outline:hover { background: rgba(42, 130, 176, 0.08); border-color: #4f9bc2; }
-    .btn:active { transform: scale(0.95); }
-    .btn:disabled { opacity: 0.5; pointer-events: none; filter: grayscale(0.3); }
-    .result-panel {
-      margin-top: 28px; background: #0b293f; border-radius: 32px;
-      padding: 20px 22px 18px; border: 1px solid #3d7d9f;
-      box-shadow: inset 0 4px 14px rgba(0,0,0,0.5);
-    }
-    .result-header {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 10px; margin-bottom: 14px;
-    }
-    .result-header span {
-      color: #b2ddf5; font-weight: 450; font-size: 0.85rem;
-      background: #1d4057; padding: 4px 18px; border-radius: 40px; letter-spacing: 0.2px;
-    }
-    .copy-btn {
-      background: #1e5a7a; border: none; color: #e3f2fc; padding: 6px 22px;
-      border-radius: 60px; font-size: 0.8rem; font-weight: 500; cursor: pointer;
-      transition: 0.15s; border: 1px solid #4787aa; display: inline-flex; align-items: center; gap: 6px;
-    }
-    .copy-btn:hover { background: #2b7197; color: white; border-color: #6aa6c9; }
-    .copy-btn.copied { background: #1d7a5a; border-color: #2b9e7a; color: white; }
-    .log-box {
-      background: #0d2a3e; border-radius: 20px; padding: 18px 18px 12px;
-      color: #c4e2f3; font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      font-size: 0.78rem; line-height: 1.9; white-space: pre-wrap; word-break: break-all;
-      max-height: 240px; overflow-y: auto; border: 1px solid #3a789b;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .log-box:empty::before {
-      content: "🔮 等待转换…… 点击「转换订阅」生成链接";
-      color: #5896bb; font-style: italic; font-weight: 300;
-    }
-    .log-box a { color: #95d0ef; text-decoration: underline; word-break: break-all; }
-    .log-box a:hover { color: #c2edff; }
-    .log-box .error { color: #f07a6a; }
-    .log-box .success { color: #4cdb8c; }
-    .log-box .warning { color: #f7b773; }
-    .footer-note {
-      margin-top: 14px; font-size: 0.7rem; color: #3d789b;
-      text-align: right; border-top: 1px dashed #8ebdd7; padding-top: 14px; letter-spacing: 0.2px;
-    }
-    .log-box::-webkit-scrollbar { width: 5px; background: #1a4057; border-radius: 10px; }
-    .log-box::-webkit-scrollbar-thumb { background: #3f84aa; border-radius: 10px; }
-    .log-box::-webkit-scrollbar-thumb:hover { background: #5ca3c9; }
-    @media (max-width: 580px) {
-      .glass-card { padding: 24px 16px; }
-      .title-group h1 { font-size: 1.6rem; }
-      .input-row { flex-direction: column; align-items: stretch; }
-      .input-row label { min-width: auto; }
-      .adv-row { flex-direction: column; align-items: stretch; }
-      .action-bar { flex-direction: column; align-items: stretch; }
-      .btn { justify-content: center; }
-      .result-header { flex-direction: column; align-items: stretch; }
-    }
-  </style>
-</head>
-<body>
-<div class="glass-card">
-  <div class="header">
-    <div class="title-group">
-      <h1>⚡ 订阅转换</h1>
-      <span class="badge">Aries · 踏天境</span>
-    </div>
-  </div>
-  <div class="sub-desc">🌊 蓝色基调 · 一键转换订阅 · 自动复制</div>
-
-  <div class="input-section">
-    <div class="input-row">
-      <label for="subUrl">📎 订阅URL</label>
-      <input type="url" id="subUrl" inputmode="url" autocomplete="url" placeholder="https://example.com/sub/xxx" value="">
-    </div>
-    <div class="advanced-area">
-      <div class="adv-row">
-        <label for="targetSelect">🎯 目标</label>
-        <select id="targetSelect">
-          <option value="clash">Clash</option>
-          <option value="clashr">ClashR</option>
-          <option value="surge">Surge</option>
-          <option value="quantumultx">Quantumult X</option>
-        </select>
-      </div>
-      <div class="adv-row" style="justify-content: flex-start; gap: 6px 18px;">
-        <span style="font-size:0.75rem; color:#0a5a7a;">📌 规则集: ACL4SSR_Online_Full_Dream</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="action-bar">
-    <button class="btn btn-primary" id="convertBtn">🔄 转换订阅</button>
-    <button class="btn btn-outline" id="clearAllBtn" style="border-color:#7bb5d6;">🧹 重置全部</button>
-  </div>
-
-  <div class="result-panel">
-    <div class="result-header">
-      <span>📋 转换日志 / 链接</span>
-      <button class="copy-btn" id="copyBtn">📄 复制链接</button>
-    </div>
-    <div class="log-box" id="logOutput" role="log" aria-live="polite"></div>
-  </div>
-  <div class="footer-note">🌐 点击转换生成链接 · 支持 Clash / Surge / Quantumult X</div>
-</div>
-
-<script>
-  (function() {
-    "use strict";
-
-    const subUrlInput = document.getElementById('subUrl');
-    const convertBtn = document.getElementById('convertBtn');
-    const clearAllBtn = document.getElementById('clearAllBtn');
-    const logOutput = document.getElementById('logOutput');
-    const copyBtn = document.getElementById('copyBtn');
-    const targetSelect = document.getElementById('targetSelect');
-
-    const BASE_API = 'https://api.v1.mk/sub';
-    const CONFIG_URL = 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Dream.ini';
-
-    const FIXED_PARAMS = {
-      insert: 'false', emoji: 'true', list: 'false', xudp: 'true',
-      udp: 'true', tfo: 'true', expand: 'true', scv: 'false',
-      fdn: 'false', 'clash.doh': 'true', new_name: 'true', diyua: 'ShadowRocket'
-    };
-
-    function appendToLog(content, className = '') {
-      const wrapper = document.createElement('div');
-      if (className) wrapper.className = className;
-      if (typeof content === 'string') {
-        const urlMatch = content.match(/(https?:\/\/[^\s]+)/);
-        if (urlMatch && className !== 'error') {
-          const parts = content.split(/(https?:\/\/[^\s]+)/);
-          parts.forEach((part) => {
-            if (part.match(/^https?:\/\/[^\s]+$/)) {
-              const a = document.createElement('a');
-              a.href = part; a.target = '_blank'; a.rel = 'noopener noreferrer';
-              a.textContent = part;
-              wrapper.appendChild(a);
-            } else if (part) {
-              wrapper.appendChild(document.createTextNode(part));
-            }
-          });
-        } else {
-          wrapper.textContent = content;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Aries · 踏天境</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      } else if (content instanceof Node) {
-        wrapper.appendChild(content);
-      }
-      logOutput.appendChild(wrapper);
-      logOutput.scrollTop = logOutput.scrollHeight;
-    }
 
-    function clearLog() {
-      logOutput.innerHTML = '';
-      logOutput.removeAttribute('data-link');
-      copyBtn.textContent = '📄 复制链接';
-      copyBtn.classList.remove('copied');
-    }
+        body {
+            background: linear-gradient(145deg, #d6eaf8, #a9d0e6);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 20px;
+        }
 
-    function buildConvertUrl(userSubUrl, target = 'clash') {
-      if (!userSubUrl || userSubUrl.trim() === '') return null;
-      const trimmed = userSubUrl.trim();
-      try { new URL(trimmed); } catch { return null; }
+        .glass-card {
+            max-width: 880px;
+            width: 100%;
+            background: rgba(235, 247, 255, 0.65);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 48px;
+            padding: 32px 32px 40px;
+            box-shadow: 0 30px 60px -20px rgba(8, 60, 100, 0.4), 0 8px 20px rgba(0, 40, 70, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
 
-      const params = new URLSearchParams();
-      params.set('target', target);
-      params.set('config', CONFIG_URL);
-      for (const [key, value] of Object.entries(FIXED_PARAMS)) {
-        params.set(key, value);
-      }
-      params.set('url', trimmed);
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
 
-      return `${BASE_API}?${params.toString()}`;
-    }
+        .title-group {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
 
-    function displayConvertedLink(link, target) {
-      clearLog();
-      if (!link) {
-        appendToLog('❌ 生成的转换链接无效，请检查订阅地址。', 'error');
-        return;
-      }
-      logOutput.dataset.link = link;
+        .title-group h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0b4463, #1d6c97);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-      appendToLog('✅ 转换成功！', 'success');
-      appendToLog(`📌 目标: ${target}`, '');
+        .badge {
+            background: rgba(21, 94, 136, 0.18);
+            backdrop-filter: blur(4px);
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #0f4d70;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.4px;
+        }
 
-      const linkContainer = document.createElement('div');
-      linkContainer.style.marginTop = '6px';
-      const label = document.createTextNode('🔗 转换链接: ');
-      linkContainer.appendChild(label);
-      const a = document.createElement('a');
-      a.href = link; a.target = '_blank'; a.rel = 'noopener noreferrer';
-      a.textContent = link;
-      linkContainer.appendChild(a);
-      logOutput.appendChild(linkContainer);
+        .sub-desc {
+            color: #135172;
+            font-size: 0.9rem;
+            border-left: 4px solid #3287b5;
+            padding-left: 18px;
+            background: rgba(50, 135, 181, 0.06);
+            border-radius: 0 16px 16px 0;
+            line-height: 1.5;
+            margin-bottom: 28px;
+            padding: 8px 16px 8px 22px;
+        }
 
-      const plainContainer = document.createElement('div');
-      plainContainer.style.marginTop = '8px';
-      plainContainer.style.opacity = '0.6';
-      plainContainer.style.fontSize = '0.7rem';
-      const plainLabel = document.createTextNode('📎 纯文本: ');
-      plainContainer.appendChild(plainLabel);
-      plainContainer.appendChild(document.createTextNode(link));
-      logOutput.appendChild(plainContainer);
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
 
-      logOutput.scrollTop = logOutput.scrollHeight;
-    }
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
 
-    function handleConvert() {
-      const rawUrl = subUrlInput.value.trim();
-      const target = targetSelect.value;
+        .input-row label {
+            font-weight: 500;
+            color: #0c4868;
+            min-width: 80px;
+            font-size: 0.9rem;
+            letter-spacing: 0.2px;
+        }
 
-      if (!rawUrl) {
-        clearLog();
-        appendToLog('❌ 请先输入订阅 URL。', 'error');
-        subUrlInput.focus();
-        return;
-      }
+        .input-row input {
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 20px;
+            border: 1px solid rgba(60, 145, 195, 0.35);
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            font-size: 0.95rem;
+            transition: 0.2s;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+            color: #053a55;
+            font-weight: 450;
+        }
 
-      try { new URL(rawUrl); } catch {
-        clearLog();
-        appendToLog('⚠️ 订阅链接格式无效，请输入有效的 HTTP/HTTPS 地址。', 'warning');
-        subUrlInput.focus();
-        subUrlInput.setCustomValidity('请输入有效的 URL');
-        return;
-      }
-      subUrlInput.setCustomValidity('');
+        .input-row input:focus {
+            outline: none;
+            border-color: #2a82b0;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 5px rgba(42, 130, 176, 0.2);
+        }
 
-      const converted = buildConvertUrl(rawUrl, target);
-      if (!converted) {
-        clearLog();
-        appendToLog('❌ 生成转换链接失败。', 'error');
-        return;
-      }
-      displayConvertedLink(converted, target);
-    }
+        .input-row input::placeholder {
+            color: #6f9ebd;
+            font-weight: 300;
+        }
 
-    function copyConvertedLink() {
-      const link = logOutput.dataset.link;
-      if (!link) {
-        alert('没有可复制的链接，请先执行转换。');
-        return;
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(link).then(() => showCopySuccess()).catch(() => fallbackCopy(link));
-      } else {
-        fallbackCopy(link);
-      }
-    }
+        .advanced-area {
+            background: rgba(200, 229, 245, 0.35);
+            backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
 
-    function showCopySuccess() {
-      copyBtn.textContent = '✅ 已复制';
-      copyBtn.classList.add('copied');
-      const statusDiv = document.createElement('div');
-      statusDiv.setAttribute('role', 'status');
-      statusDiv.setAttribute('aria-live', 'polite');
-      statusDiv.className = 'sr-only';
-      statusDiv.textContent = '链接已复制到剪贴板';
-      document.body.appendChild(statusDiv);
-      setTimeout(() => { document.body.removeChild(statusDiv); }, 1000);
-      setTimeout(() => {
-        copyBtn.textContent = '📄 复制链接';
-        copyBtn.classList.remove('copied');
-      }, 3000);
-    }
+        .adv-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 18px;
+        }
 
-    function fallbackCopy(text) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      textarea.style.left = '-9999px';
-      textarea.style.top = '-9999px';
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        const successful = document.execCommand('copy');
-        if (successful) showCopySuccess();
-        else alert('复制失败，请手动复制链接。');
-      } catch { alert('复制失败，请手动复制链接。'); }
-      document.body.removeChild(textarea);
-    }
+        .adv-row label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #0a4d70;
+            min-width: 70px;
+        }
 
-    function clearAll() {
-      subUrlInput.value = '';
-      clearLog();
-      subUrlInput.focus();
-      subUrlInput.setCustomValidity('');
-    }
+        .adv-row select {
+            padding: 8px 16px;
+            border-radius: 40px;
+            border: 1px solid #b2d3ea;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(4px);
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            color: #043a55;
+            transition: 0.15s;
+        }
 
-    function init() {
-      convertBtn.addEventListener('click', handleConvert);
-      clearAllBtn.addEventListener('click', clearAll);
-      copyBtn.addEventListener('click', copyConvertedLink);
-      subUrlInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') { e.preventDefault(); convertBtn.click(); }
-      });
-      subUrlInput.addEventListener('input', () => subUrlInput.setCustomValidity(''));
-    }
+        .adv-row select:focus {
+            outline: none;
+            border-color: #2a82b0;
+            box-shadow: 0 0 0 3px rgba(42, 130, 176, 0.25);
+        }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
-    }
+        .inline-hint {
+            font-size: 0.7rem;
+            color: #347a9e;
+            margin-left: 4px;
+        }
 
-  })();
-</script>
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin: 22px 0 18px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn {
+            border: none;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #0b4b6b;
+            border: 1px solid rgba(110, 175, 210, 0.5);
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.2px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-primary {
+            background: #1d6f9c;
+            border: 1px solid #13547a;
+            color: white;
+            box-shadow: 0 8px 18px rgba(24, 86, 128, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #135a82;
+            transform: scale(0.97);
+            box-shadow: 0 6px 14px rgba(20, 80, 120, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #8bbddb;
+        }
+
+        .btn-outline:hover {
+            background: rgba(42, 130, 176, 0.08);
+            border-color: #4f9bc2;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: grayscale(0.3);
+        }
+
+        .result-panel {
+            margin-top: 28px;
+            background: #0b293f;
+            border-radius: 32px;
+            padding: 20px 22px 18px;
+            border: 1px solid #3d7d9f;
+            box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.5);
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .result-header span {
+            color: #b2ddf5;
+            font-weight: 450;
+            font-size: 0.85rem;
+            background: #1d4057;
+            padding: 4px 18px;
+            border-radius: 40px;
+            letter-spacing: 0.2px;
+        }
+
+        .copy-btn {
+            background: #1e5a7a;
+            border: none;
+            color: #e3f2fc;
+            padding: 6px 22px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid #4787aa;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: #2b7197;
+            color: white;
+            border-color: #6aa6c9;
+        }
+
+        .copy-btn.copied {
+            background: #1d7a5a;
+            border-color: #2b9e7a;
+            color: white;
+        }
+
+        .log-box {
+            background: #0d2a3e;
+            border-radius: 20px;
+            padding: 18px 18px 12px;
+            color: #c4e2f3;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.78rem;
+            line-height: 1.9;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 240px;
+            overflow-y: auto;
+            border: 1px solid #3a789b;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .log-box:empty::before {
+            content: "🔮 等待转换…… 点击「转换订阅」生成链接";
+            color: #5896bb;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .log-box a {
+            color: #95d0ef;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        .log-box a:hover {
+            color: #c2edff;
+        }
+
+        .log-box .error {
+            color: #f07a6a;
+        }
+
+        .log-box .success {
+            color: #4cdb8c;
+        }
+
+        .log-box .warning {
+            color: #f7b773;
+        }
+
+        .footer-note {
+            margin-top: 14px;
+            font-size: 0.7rem;
+            color: #3d789b;
+            text-align: right;
+            border-top: 1px dashed #8ebdd7;
+            padding-top: 14px;
+            letter-spacing: 0.2px;
+        }
+
+        .log-box::-webkit-scrollbar {
+            width: 5px;
+            background: #1a4057;
+            border-radius: 10px;
+        }
+
+        .log-box::-webkit-scrollbar-thumb {
+            background: #3f84aa;
+            border-radius: 10px;
+        }
+
+        .log-box::-webkit-scrollbar-thumb:hover {
+            background: #5ca3c9;
+        }
+
+        @media (max-width: 580px) {
+            .glass-card {
+                padding: 24px 16px;
+            }
+
+            .title-group h1 {
+                font-size: 1.6rem;
+            }
+
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .input-row label {
+                min-width: auto;
+            }
+
+            .adv-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .result-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-card">
+        <div class="header">
+            <div class="title-group">
+                <h1>⚡ 订阅转换</h1>
+                <span class="badge">Aries · 踏天境</span>
+            </div>
+        </div>
+        <div class="sub-desc">🌊 蓝色基调 · 一键转换订阅 · 自动复制</div>
+
+        <div class="input-section">
+            <div class="input-row">
+                <label for="subUrl">📎 订阅URL</label>
+                <input type="url" id="subUrl" inputmode="url" autocomplete="url"
+                    placeholder="https://example.com/sub/xxx" value="">
+            </div>
+            <div class="advanced-area">
+                <div class="adv-row">
+                    <label for="targetSelect">🎯 目标</label>
+                    <select id="targetSelect">
+                        <option value="clash">Clash</option>
+                        <option value="clashr">ClashR</option>
+                        <option value="surge">Surge</option>
+                        <option value="quantumultx">Quantumult X</option>
+                    </select>
+                </div>
+                <div class="adv-row" style="justify-content: flex-start; gap: 6px 18px;">
+                    <span style="font-size:0.75rem; color:#0a5a7a;">📌 规则集: ACL4SSR_Online_Full_Dream</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button class="btn btn-primary" id="convertBtn">🔄 转换订阅</button>
+            <button class="btn btn-outline" id="clearAllBtn" style="border-color:#7bb5d6;">🧹 重置全部</button>
+        </div>
+
+        <div class="result-panel">
+            <div class="result-header">
+                <span>📋 转换日志 / 链接</span>
+                <button class="copy-btn" id="copyBtn">📄 复制链接</button>
+            </div>
+            <div class="log-box" id="logOutput" role="log" aria-live="polite"></div>
+        </div>
+        <div class="footer-note">🌐 点击转换生成链接 · 支持 Clash / Surge / Quantumult X</div>
+    </div>
+
+    <script>
+        (function () {
+            "use strict";
+
+            const subUrlInput = document.getElementById('subUrl');
+            const convertBtn = document.getElementById('convertBtn');
+            const clearAllBtn = document.getElementById('clearAllBtn');
+            const logOutput = document.getElementById('logOutput');
+            const copyBtn = document.getElementById('copyBtn');
+            const targetSelect = document.getElementById('targetSelect');
+
+            const BASE_API = 'https://api.v1.mk/sub';
+            const CONFIG_URL = 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/config/ACL4SSR_Online_Full.ini';
+
+            const FIXED_PARAMS = {
+                insert: 'false', emoji: 'true', list: 'false', xudp: 'true',
+                udp: 'true', tfo: 'true', expand: 'true', scv: 'false',
+                fdn: 'false', 'clash.doh': 'true', new_name: 'true', diyua: 'ShadowRocket'
+            };
+
+            function appendToLog(content, className = '') {
+                const wrapper = document.createElement('div');
+                if (className) wrapper.className = className;
+                if (typeof content === 'string') {
+                    const urlMatch = content.match(/(https?:\/\/[^\s]+)/);
+                    if (urlMatch && className !== 'error') {
+                        const parts = content.split(/(https?:\/\/[^\s]+)/);
+                        parts.forEach((part) => {
+                            if (part.match(/^https?:\/\/[^\s]+$/)) {
+                                const a = document.createElement('a');
+                                a.href = part; a.target = '_blank'; a.rel = 'noopener noreferrer';
+                                a.textContent = part;
+                                wrapper.appendChild(a);
+                            } else if (part) {
+                                wrapper.appendChild(document.createTextNode(part));
+                            }
+                        });
+                    } else {
+                        wrapper.textContent = content;
+                    }
+                } else if (content instanceof Node) {
+                    wrapper.appendChild(content);
+                }
+                logOutput.appendChild(wrapper);
+                logOutput.scrollTop = logOutput.scrollHeight;
+            }
+
+            function clearLog() {
+                logOutput.innerHTML = '';
+                logOutput.removeAttribute('data-link');
+                copyBtn.textContent = '📄 复制链接';
+                copyBtn.classList.remove('copied');
+            }
+
+            function buildConvertUrl(userSubUrl, target = 'clash') {
+                if (!userSubUrl || userSubUrl.trim() === '') return null;
+                const trimmed = userSubUrl.trim();
+                try { new URL(trimmed); } catch { return null; }
+
+                const params = new URLSearchParams();
+                params.set('target', target);
+                params.set('config', CONFIG_URL);
+                for (const [key, value] of Object.entries(FIXED_PARAMS)) {
+                    params.set(key, value);
+                }
+                params.set('url', trimmed);
+
+                return `${BASE_API}?${params.toString()}`;
+            }
+
+            function displayConvertedLink(link, target) {
+                clearLog();
+                if (!link) {
+                    appendToLog('❌ 生成的转换链接无效，请检查订阅地址。', 'error');
+                    return;
+                }
+                logOutput.dataset.link = link;
+
+                appendToLog('✅ 转换成功！', 'success');
+                appendToLog(`📌 目标: ${target}`, '');
+
+                const linkContainer = document.createElement('div');
+                linkContainer.style.marginTop = '6px';
+                const label = document.createTextNode('🔗 转换链接: ');
+                linkContainer.appendChild(label);
+                const a = document.createElement('a');
+                a.href = link; a.target = '_blank'; a.rel = 'noopener noreferrer';
+                a.textContent = link;
+                linkContainer.appendChild(a);
+                logOutput.appendChild(linkContainer);
+
+                const plainContainer = document.createElement('div');
+                plainContainer.style.marginTop = '8px';
+                plainContainer.style.opacity = '0.6';
+                plainContainer.style.fontSize = '0.7rem';
+                const plainLabel = document.createTextNode('📎 纯文本: ');
+                plainContainer.appendChild(plainLabel);
+                plainContainer.appendChild(document.createTextNode(link));
+                logOutput.appendChild(plainContainer);
+
+                logOutput.scrollTop = logOutput.scrollHeight;
+            }
+
+            function handleConvert() {
+                const rawUrl = subUrlInput.value.trim();
+                const target = targetSelect.value;
+
+                if (!rawUrl) {
+                    clearLog();
+                    appendToLog('❌ 请先输入订阅 URL。', 'error');
+                    subUrlInput.focus();
+                    return;
+                }
+
+                try { new URL(rawUrl); } catch {
+                    clearLog();
+                    appendToLog('⚠️ 订阅链接格式无效，请输入有效的 HTTP/HTTPS 地址。', 'warning');
+                    subUrlInput.focus();
+                    subUrlInput.setCustomValidity('请输入有效的 URL');
+                    return;
+                }
+                subUrlInput.setCustomValidity('');
+
+                const converted = buildConvertUrl(rawUrl, target);
+                if (!converted) {
+                    clearLog();
+                    appendToLog('❌ 生成转换链接失败。', 'error');
+                    return;
+                }
+                displayConvertedLink(converted, target);
+            }
+
+            function copyConvertedLink() {
+                const link = logOutput.dataset.link;
+                if (!link) {
+                    alert('没有可复制的链接，请先执行转换。');
+                    return;
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(link).then(() => showCopySuccess()).catch(() => fallbackCopy(link));
+                } else {
+                    fallbackCopy(link);
+                }
+            }
+
+            function showCopySuccess() {
+                copyBtn.textContent = '✅ 已复制';
+                copyBtn.classList.add('copied');
+                const statusDiv = document.createElement('div');
+                statusDiv.setAttribute('role', 'status');
+                statusDiv.setAttribute('aria-live', 'polite');
+                statusDiv.className = 'sr-only';
+                statusDiv.textContent = '链接已复制到剪贴板';
+                document.body.appendChild(statusDiv);
+                setTimeout(() => { document.body.removeChild(statusDiv); }, 1000);
+                setTimeout(() => {
+                    copyBtn.textContent = '📄 复制链接';
+                    copyBtn.classList.remove('copied');
+                }, 3000);
+            }
+
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                textarea.style.left = '-9999px';
+                textarea.style.top = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) showCopySuccess();
+                    else alert('复制失败，请手动复制链接。');
+                } catch { alert('复制失败，请手动复制链接。'); }
+                document.body.removeChild(textarea);
+            }
+
+            function clearAll() {
+                subUrlInput.value = '';
+                clearLog();
+                subUrlInput.focus();
+                subUrlInput.setCustomValidity('');
+            }
+
+            function init() {
+                convertBtn.addEventListener('click', handleConvert);
+                clearAllBtn.addEventListener('click', clearAll);
+                copyBtn.addEventListener('click', copyConvertedLink);
+                subUrlInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); convertBtn.click(); }
+                });
+                subUrlInput.addEventListener('input', () => subUrlInput.setCustomValidity(''));
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+        })();
+    </script>
 </body>
+
 </html>
