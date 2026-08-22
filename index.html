@@ -7,9 +7,7 @@
     <title>Aries · 踏天境</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* ===== 基础重置 ===== */
         * {
@@ -17,7 +15,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             background: linear-gradient(145deg, #d6eaf8, #a9d0e6);
             min-height: 100vh;
@@ -28,7 +26,7 @@
             padding: 20px;
             transition: background 0.3s;
         }
-
+        
         /* ===== 卡片容器 ===== */
         .glass-card {
             max-width: 880px;
@@ -42,7 +40,7 @@
             border: 1px solid rgba(255, 255, 255, 0.7);
             transition: all 0.3s ease;
         }
-
+        
         /* ===== 头部 ===== */
         .header {
             display: flex;
@@ -51,14 +49,14 @@
             flex-wrap: wrap;
             margin-bottom: 18px;
         }
-
+        
         .title-group {
             display: flex;
             align-items: baseline;
             gap: 14px;
             flex-wrap: wrap;
         }
-
+        
         .title-group h1 {
             font-size: 2.1rem;
             font-weight: 600;
@@ -71,7 +69,7 @@
             align-items: center;
             gap: 6px;
         }
-
+        
         .badge {
             background: rgba(21, 94, 136, 0.18);
             backdrop-filter: blur(4px);
@@ -83,7 +81,7 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
             letter-spacing: 0.4px;
         }
-
+        
         .sub-desc {
             color: #135172;
             font-size: 0.9rem;
@@ -95,7 +93,7 @@
             margin-bottom: 28px;
             padding: 8px 16px 8px 22px;
         }
-
+        
         /* ===== 输入区域 ===== */
         .input-section {
             display: flex;
@@ -103,14 +101,14 @@
             gap: 18px;
             margin-bottom: 24px;
         }
-
+        
         .input-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 12px;
         }
-
+        
         .input-row label {
             font-weight: 500;
             color: #0c4868;
@@ -118,7 +116,7 @@
             font-size: 0.9rem;
             letter-spacing: 0.2px;
         }
-
+        
         .input-row input {
             flex: 1;
             min-width: 200px;
@@ -133,23 +131,23 @@
             color: #053a55;
             font-weight: 450;
         }
-
+        
         .input-row input:focus {
             outline: none;
             border-color: #2a82b0;
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 0 5px rgba(42, 130, 176, 0.2);
         }
-
+        
         .input-row input::placeholder {
             color: #6f9ebd;
             font-weight: 300;
         }
-
+        
         .input-row input:invalid {
             border-color: #e74c3c;
         }
-
+        
         /* ===== 高级选项 ===== */
         .advanced-area {
             background: rgba(200, 229, 245, 0.35);
@@ -161,21 +159,21 @@
             flex-direction: column;
             gap: 14px;
         }
-
+        
         .adv-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 12px 18px;
         }
-
+        
         .adv-row label {
             font-size: 0.8rem;
             font-weight: 500;
             color: #0a4d70;
             min-width: 70px;
         }
-
+        
         .adv-row select {
             padding: 8px 16px;
             border-radius: 40px;
@@ -190,19 +188,19 @@
             flex: 1;
             min-width: 150px;
         }
-
+        
         .adv-row select:focus {
             outline: none;
             border-color: #2a82b0;
             box-shadow: 0 0 0 3px rgba(42, 130, 176, 0.25);
         }
-
+        
         .inline-hint {
             font-size: 0.7rem;
             color: #347a9e;
             margin-left: 4px;
         }
-
+        
         /* ===== 按钮区域 ===== */
         .action-bar {
             display: flex;
@@ -212,7 +210,7 @@
             align-items: center;
             justify-content: space-between;
         }
-
+        
         .btn {
             border: none;
             background: rgba(255, 255, 255, 0.7);
@@ -232,40 +230,40 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
             user-select: none;
         }
-
+        
         .btn-primary {
             background: #1d6f9c;
             border: 1px solid #13547a;
             color: white;
             box-shadow: 0 8px 18px rgba(24, 86, 128, 0.3);
         }
-
+        
         .btn-primary:hover:not(:disabled) {
             background: #135a82;
             transform: scale(0.97);
             box-shadow: 0 6px 14px rgba(20, 80, 120, 0.35);
         }
-
+        
         .btn-outline {
             background: transparent;
             border: 1px solid #8bbddb;
         }
-
+        
         .btn-outline:hover:not(:disabled) {
             background: rgba(42, 130, 176, 0.08);
             border-color: #4f9bc2;
         }
-
+        
         .btn:active:not(:disabled) {
             transform: scale(0.95);
         }
-
+        
         .btn:disabled {
             opacity: 0.5;
             pointer-events: none;
             filter: grayscale(0.3);
         }
-
+        
         /* ===== 结果面板 ===== */
         .result-panel {
             margin-top: 28px;
@@ -275,7 +273,7 @@
             border: 1px solid #3d7d9f;
             box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.5);
         }
-
+        
         .result-header {
             display: flex;
             justify-content: space-between;
@@ -284,7 +282,7 @@
             gap: 10px;
             margin-bottom: 14px;
         }
-
+        
         .result-header span {
             color: #b2ddf5;
             font-weight: 450;
@@ -294,7 +292,7 @@
             border-radius: 40px;
             letter-spacing: 0.2px;
         }
-
+        
         .copy-btn {
             background: #1e5a7a;
             border: none;
@@ -310,24 +308,24 @@
             align-items: center;
             gap: 6px;
         }
-
+        
         .copy-btn:hover:not(:disabled) {
             background: #2b7197;
             color: white;
             border-color: #6aa6c9;
         }
-
+        
         .copy-btn.copied {
             background: #1d7a5a;
             border-color: #2b9e7a;
             color: white;
         }
-
+        
         .copy-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-
+        
         /* ===== 日志区域 ===== */
         .log-box {
             background: #0d2a3e;
@@ -344,66 +342,66 @@
             border: 1px solid #3a789b;
             box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
         }
-
+        
         .log-box:empty::before {
             content: "🔮 等待转换…… 点击「转换订阅」生成链接";
             color: #5896bb;
             font-style: italic;
             font-weight: 300;
         }
-
+        
         .log-box a {
             color: #95d0ef;
             text-decoration: underline;
             word-break: break-all;
         }
-
+        
         .log-box a:hover {
             color: #c2edff;
         }
-
+        
         .log-box .error {
             color: #f07a6a;
         }
-
+        
         .log-box .success {
             color: #4cdb8c;
         }
-
+        
         .log-box .warning {
             color: #f7b773;
         }
-
+        
         .log-box .info {
             color: #7fc9f0;
         }
-
+        
         .log-box .link-container {
             margin-top: 6px;
         }
-
+        
         .log-box .plain-text {
             margin-top: 8px;
             opacity: 0.6;
             font-size: 0.7rem;
         }
-
+        
         /* ===== 滚动条 ===== */
         .log-box::-webkit-scrollbar {
             width: 5px;
             background: #1a4057;
             border-radius: 10px;
         }
-
+        
         .log-box::-webkit-scrollbar-thumb {
             background: #3f84aa;
             border-radius: 10px;
         }
-
+        
         .log-box::-webkit-scrollbar-thumb:hover {
             background: #5ca3c9;
         }
-
+        
         /* ===== 底部 ===== */
         .footer-note {
             margin-top: 14px;
@@ -414,7 +412,7 @@
             padding-top: 14px;
             letter-spacing: 0.2px;
         }
-
+        
         /* ===== 状态指示器 ===== */
         .status-badge {
             display: inline-block;
@@ -423,22 +421,22 @@
             border-radius: 50%;
             margin-right: 6px;
         }
-
+        
         .status-badge.online {
             background: #4cdb8c;
             box-shadow: 0 0 8px #4cdb8c;
         }
-
+        
         .status-badge.offline {
             background: #f07a6a;
             box-shadow: 0 0 8px #f07a6a;
         }
-
+        
         .status-badge.checking {
             background: #f7b773;
             animation: pulse 1s infinite;
         }
-
+        
         @keyframes pulse {
             0%,
             100% {
@@ -448,7 +446,7 @@
                 opacity: 0.3;
             }
         }
-
+        
         /* ===== 辅助类 ===== */
         .sr-only {
             position: absolute;
@@ -460,40 +458,40 @@
             clip: rect(0, 0, 0, 0);
             border: 0;
         }
-
+        
         /* ===== 响应式 ===== */
         @media (max-width: 580px) {
             .glass-card {
                 padding: 24px 16px;
             }
-
+        
             .title-group h1 {
                 font-size: 1.6rem;
             }
-
+        
             .input-row {
                 flex-direction: column;
                 align-items: stretch;
             }
-
+        
             .input-row label {
                 min-width: auto;
             }
-
+        
             .adv-row {
                 flex-direction: column;
                 align-items: stretch;
             }
-
+        
             .action-bar {
                 flex-direction: column;
                 align-items: stretch;
             }
-
+        
             .btn {
                 justify-content: center;
             }
-
+        
             .result-header {
                 flex-direction: column;
                 align-items: stretch;
@@ -519,9 +517,7 @@
         <div class="input-section">
             <div class="input-row">
                 <label for="subUrl">📎 订阅URL</label>
-                <input type="url" id="subUrl" inputmode="url" autocomplete="url" autocorrect="off"
-                    autocapitalize="off" spellcheck="false" maxlength="2000"
-                    placeholder="https://example.com/sub/xxx" value="">
+                <input type="url" id="subUrl" inputmode="url" autocomplete="url" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="2000" placeholder="https://example.com/sub/xxx" value="">
             </div>
             <div class="advanced-area">
                 <div class="adv-row">
@@ -563,13 +559,14 @@
     <script>
         (function() {
             "use strict";
-
+        
             // ===== 配置 =====
             const CONFIG = {
                 BASE_API: 'https://api.v1.mk/sub',
                 // 根据截图整理的完整配置列表
                 CONFIG_OPTIONS: [
-                    { name: 'ACL4SSR (默认)', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR.ini' },
+                    { name: 'ACL4SSR_Online_Full (默认)', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full.ini' },
+                    { name: 'ACL4SSR', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR.ini' },
                     { name: 'ACL4SSR_AdblockPlus', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_AdblockPlus.ini' },
                     { name: 'ACL4SSR_BackCN', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_BackCN.ini' },
                     { name: 'ACL4SSR_Mini', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Mini.ini' },
@@ -580,25 +577,33 @@
                     { name: 'ACL4SSR_NoApple', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_NoApple.ini' },
                     { name: 'ACL4SSR_NoAuto', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_NoAuto.ini' },
                     { name: 'ACL4SSR_NoAuto_NoApple', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_NoAuto_NoApple.ini' },
-                    { name: 'ACL4SSR_NoAuto_NoMicrosoft', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_NoAuto_NoMicrosoft.ini' },
+                    { name: 'ACL4SSR_NoAuto_NoApple_NoMicrosoft', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_NoAuto_NoApple_NoMicrosoft.ini' },
                     { name: 'ACL4SSR_NoMicrosoft', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_NoMicrosoft.ini' },
                     { name: 'ACL4SSR_Online', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online.ini' },
                     { name: 'ACL4SSR_Online_AdblockPlus', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_AdblockPlus.ini' },
+                    { name: 'ACL4SSR_Online_Full', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full.ini' },
+                    { name: 'ACL4SSR_Online_Full_AdblockPlus', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_AdblockPlus.ini' },
                     { name: 'ACL4SSR_Online_Full_Dream', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Dream.ini' },
+                    { name: 'ACL4SSR_Online_Full_Dream_AD', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Dream_AD.ini' },
+                    { name: 'ACL4SSR_Online_Full_Dream_Balance', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Dream_Balance.ini' },
+                    { name: 'ACL4SSR_Online_Full_Dream_FB', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Dream_FB.ini' },
+                    { name: 'ACL4SSR_Online_Full_Dream_backup', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Dream_backup.ini' },
                     { name: 'ACL4SSR_Online_Full_Google', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Google.ini' },
-                    { name: 'ACL4SSR_Online_Full_Microsoft', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Microsoft.ini' },
+                    { name: 'ACL4SSR_Online_Full_MultiMode', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_MultiMode.ini' },
                     { name: 'ACL4SSR_Online_Full_Netflix', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_Netflix.ini' },
-                    { name: 'ACL4SSR_Online_Full_NoApple', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_NoApple.ini' },
+                    { name: 'ACL4SSR_Online_Full_NoAuto', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Full_NoAuto.ini' },
                     { name: 'ACL4SSR_Online_Mini', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Mini.ini' },
                     { name: 'ACL4SSR_Online_Mini_AdblockPlus', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Mini_AdblockPlus.ini' },
+                    { name: 'ACL4SSR_Online_Mini_Ai', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Mini_Ai.ini' },
                     { name: 'ACL4SSR_Online_Mini_Fallback', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Mini_Fallback.ini' },
+                    { name: 'ACL4SSR_Online_Mini_MultiCountry', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Mini_MultiCountry.ini' },
                     { name: 'ACL4SSR_Online_Mini_MultiMode', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini' },
                     { name: 'ACL4SSR_Online_Mini_NoAuto', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_Mini_NoAuto.ini' },
                     { name: 'ACL4SSR_Online_MultiCountry', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_MultiCountry.ini' },
                     { name: 'ACL4SSR_Online_NoAuto', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_NoAuto.ini' },
                     { name: 'ACL4SSR_Online_NoReject', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_Online_NoReject.ini' },
-                    { name: 'ACL4SSR_WithChinaIP', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_WithChinaIP.ini' },
-                    { name: 'ACL4SSR_WithChinaIP_NoApple', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_WithChinaIP_NoApple.ini' },
+                    { name: 'ACL4SSR_WithChinaIp', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_WithChinaIp.ini' },
+                    { name: 'ACL4SSR_WithChinaIp_WithGFW', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_WithChinaIp_WithGFW.ini' },
                     { name: 'ACL4SSR_WithGFW', url: 'https://raw.githubusercontent.com/WC-Dream/ACL4SSR/refs/heads/WD/Clash/config/ACL4SSR_WithGFW.ini' },
                 ],
                 FIXED_PARAMS: {
@@ -619,7 +624,7 @@
                 MAX_RETRY: 2,
                 TIMEOUT: 10000,
             };
-
+        
             // ===== DOM 引用 =====
             const subUrlInput = document.getElementById('subUrl');
             const convertBtn = document.getElementById('convertBtn');
@@ -630,13 +635,13 @@
             const configSelect = document.getElementById('configSelect');
             const statusBadge = document.getElementById('statusBadge');
             const statusText = document.getElementById('statusText');
-
+        
             // ===== 状态 =====
             let isConverting = false;
             let lastConvertedLink = null;
             let statusCheckTimer = null;
             let ariaLiveElement = null;
-
+        
             // ===== 工具函数 =====
             function debounce(fn, delay = 300) {
                 let timer = null;
@@ -645,11 +650,11 @@
                     timer = setTimeout(() => fn.apply(this, args), delay);
                 };
             }
-
+        
             function formatTime() {
                 return new Date().toLocaleTimeString('zh-CN', { hour12: false });
             }
-
+        
             function getAriaLiveElement() {
                 if (!ariaLiveElement || !document.body.contains(ariaLiveElement)) {
                     ariaLiveElement = document.createElement('div');
@@ -660,18 +665,18 @@
                 }
                 return ariaLiveElement;
             }
-
+        
             function announce(message) {
                 const el = getAriaLiveElement();
                 el.textContent = message;
                 setTimeout(() => { el.textContent = ''; }, 3000);
             }
-
+        
             // ===== 日志系统 =====
             function appendToLog(content, className = '') {
                 const wrapper = document.createElement('div');
                 if (className) wrapper.className = className;
-
+        
                 if (typeof content === 'string') {
                     const urlMatch = content.match(/(https?:\/\/[^\s]+)/);
                     if (urlMatch && className !== 'error' && className !== 'warning') {
@@ -694,11 +699,11 @@
                 } else if (content instanceof Node) {
                     wrapper.appendChild(content);
                 }
-
+        
                 logOutput.appendChild(wrapper);
                 logOutput.scrollTop = logOutput.scrollHeight;
             }
-
+        
             function clearLog() {
                 logOutput.innerHTML = '';
                 logOutput.removeAttribute('data-link');
@@ -707,42 +712,42 @@
                 copyBtn.textContent = '📄 复制链接';
                 copyBtn.classList.remove('copied');
             }
-
+        
             function logInfo(message) {
                 appendToLog(`ℹ️ ${message}`, 'info');
             }
-
+        
             function logSuccess(message) {
                 appendToLog(`✅ ${message}`, 'success');
                 announce('转换成功');
             }
-
+        
             function logWarning(message) {
                 appendToLog(`⚠️ ${message}`, 'warning');
             }
-
+        
             function logError(message) {
                 appendToLog(`❌ ${message}`, 'error');
                 announce('转换失败');
             }
-
+        
             // ===== API 状态检测 =====
             async function checkApiStatus() {
                 try {
                     statusBadge.className = 'status-badge checking';
                     statusText.textContent = '检测中...';
-
+        
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 5000);
-
+        
                     const response = await fetch(CONFIG.BASE_API, {
                         method: 'HEAD',
                         signal: controller.signal,
                         mode: 'cors',
                     });
-
+        
                     clearTimeout(timeoutId);
-
+        
                     if (response.ok) {
                         statusBadge.className = 'status-badge online';
                         statusText.textContent = 'API 在线';
@@ -761,44 +766,44 @@
                     console.warn('API 状态检测失败:', error.message);
                 }
             }
-
+        
             // ===== 构建转换链接 =====
             function buildConvertUrl(userSubUrl, target, configUrl) {
                 const trimmed = userSubUrl.trim();
                 if (!trimmed) return null;
-
+        
                 try {
                     new URL(trimmed);
                 } catch {
                     return null;
                 }
-
+        
                 const params = new URLSearchParams();
                 params.set('target', target);
                 params.set('config', configUrl);
-
+        
                 for (const [key, value] of Object.entries(CONFIG.FIXED_PARAMS)) {
                     params.set(key, value);
                 }
                 params.set('url', trimmed);
-
+        
                 return `${CONFIG.BASE_API}?${params.toString()}`;
             }
-
+        
             // ===== 验证订阅链接 =====
             async function validateSubscription(url) {
                 try {
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT);
-
+        
                     const response = await fetch(url, {
                         method: 'HEAD',
                         signal: controller.signal,
                         mode: 'cors',
                     });
-
+        
                     clearTimeout(timeoutId);
-
+        
                     if (response.ok) {
                         return { valid: true, status: response.status };
                     } else {
@@ -811,7 +816,7 @@
                     return { valid: false, error: error.message || '网络错误' };
                 }
             }
-
+        
             // ===== 显示转换结果 =====
             function displayConvertedLink(link, target, rawUrl, configName) {
                 clearLog();
@@ -819,14 +824,14 @@
                     logError('生成的转换链接无效，请检查订阅地址。');
                     return;
                 }
-
+        
                 lastConvertedLink = link;
                 logOutput.dataset.link = link;
                 copyBtn.disabled = false;
-
+        
                 logSuccess('转换成功！');
                 logInfo(`目标: ${target} | 规则集: ${configName || '已选'} | 时间: ${formatTime()}`);
-
+        
                 const linkContainer = document.createElement('div');
                 linkContainer.className = 'link-container';
                 const label = document.createTextNode('🔗 转换链接: ');
@@ -838,38 +843,38 @@
                 a.textContent = link;
                 linkContainer.appendChild(a);
                 logOutput.appendChild(linkContainer);
-
+        
                 const plainContainer = document.createElement('div');
                 plainContainer.className = 'plain-text';
                 const plainLabel = document.createTextNode('📎 纯文本: ');
                 plainContainer.appendChild(plainLabel);
                 plainContainer.appendChild(document.createTextNode(link));
                 logOutput.appendChild(plainContainer);
-
+        
                 logOutput.scrollTop = logOutput.scrollHeight;
-
+        
                 try {
                     localStorage.setItem(CONFIG.STORAGE_KEY, rawUrl);
                 } catch (e) { /* ignore */ }
             }
-
+        
             // ===== 主要转换逻辑 =====
             async function handleConvert() {
                 if (isConverting) return;
-
+        
                 const rawUrl = subUrlInput.value.trim();
                 const target = targetSelect.value;
                 const configOption = configSelect.options[configSelect.selectedIndex];
                 const configUrl = configOption ? configOption.value : CONFIG.CONFIG_OPTIONS[0].url;
                 const configName = configOption ? configOption.text : CONFIG.CONFIG_OPTIONS[0].name;
-
+        
                 if (!rawUrl) {
                     clearLog();
                     logError('请先输入订阅 URL。');
                     subUrlInput.focus();
                     return;
                 }
-
+        
                 try {
                     new URL(rawUrl);
                 } catch {
@@ -881,14 +886,14 @@
                     return;
                 }
                 subUrlInput.setCustomValidity('');
-
+        
                 isConverting = true;
                 convertBtn.disabled = true;
                 convertBtn.textContent = '⏳ 转换中...';
                 clearLog();
                 logInfo('正在生成转换链接...');
                 logInfo(`使用规则集: ${configName}`);
-
+        
                 try {
                     logInfo('正在验证订阅链接...');
                     const validation = await validateSubscription(rawUrl);
@@ -898,15 +903,15 @@
                     } else {
                         logInfo(`订阅链接验证通过 (HTTP ${validation.status})`);
                     }
-
+        
                     const converted = buildConvertUrl(rawUrl, target, configUrl);
                     if (!converted) {
                         logError('生成转换链接失败，请检查订阅地址。');
                         return;
                     }
-
+        
                     displayConvertedLink(converted, target, rawUrl, configName);
-
+        
                 } catch (error) {
                     logError(`转换过程发生错误: ${error.message}`);
                     console.error('转换错误:', error);
@@ -916,7 +921,7 @@
                     convertBtn.textContent = '🔄 转换订阅';
                 }
             }
-
+        
             // ===== 复制功能 =====
             function copyConvertedLink() {
                 const link = lastConvertedLink || logOutput.dataset.link;
@@ -925,7 +930,7 @@
                     announce('没有可复制的链接');
                     return;
                 }
-
+        
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(link)
                         .then(() => showCopySuccess())
@@ -934,18 +939,18 @@
                     fallbackCopy(link);
                 }
             }
-
+        
             function showCopySuccess() {
                 copyBtn.textContent = '✅ 已复制';
                 copyBtn.classList.add('copied');
                 announce('链接已复制到剪贴板');
-
+        
                 setTimeout(() => {
                     copyBtn.textContent = '📄 复制链接';
                     copyBtn.classList.remove('copied');
                 }, 3000);
             }
-
+        
             function fallbackCopy(text) {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -955,7 +960,7 @@
                 textarea.style.top = '-9999px';
                 document.body.appendChild(textarea);
                 textarea.select();
-
+        
                 try {
                     const successful = document.execCommand('copy');
                     if (successful) {
@@ -971,7 +976,7 @@
                     document.body.removeChild(textarea);
                 }
             }
-
+        
             // ===== 重置功能 =====
             function clearAll() {
                 subUrlInput.value = '';
@@ -985,7 +990,7 @@
                 logInfo('已重置所有内容');
                 announce('已重置');
             }
-
+        
             // ===== 恢复上次使用的 URL =====
             function restoreLastUrl() {
                 try {
@@ -996,7 +1001,7 @@
                     }
                 } catch (e) { /* ignore */ }
             }
-
+        
             // ===== 初始化配置下拉菜单 =====
             function populateConfigOptions() {
                 if (!configSelect) return;
@@ -1011,7 +1016,7 @@
                     configSelect.appendChild(optElement);
                 });
             }
-
+        
             // ===== 键盘快捷键 =====
             function handleKeyboard(e) {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -1023,32 +1028,32 @@
                     subUrlInput.blur();
                 }
             }
-
+        
             // ===== 初始化 =====
             function init() {
                 populateConfigOptions();
                 restoreLastUrl();
-
+        
                 checkApiStatus();
                 statusCheckTimer = setInterval(checkApiStatus, 60000);
-
+        
                 convertBtn.addEventListener('click', handleConvert);
                 clearAllBtn.addEventListener('click', clearAll);
                 copyBtn.addEventListener('click', copyConvertedLink);
-
+        
                 subUrlInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
                         e.preventDefault();
                         convertBtn.click();
                     }
                 });
-
+        
                 subUrlInput.addEventListener('input', () => {
                     subUrlInput.setCustomValidity('');
                 });
-
+        
                 document.addEventListener('keydown', handleKeyboard);
-
+        
                 const saveToStorage = debounce((value) => {
                     try {
                         if (value) localStorage.setItem(CONFIG.STORAGE_KEY, value);
@@ -1057,7 +1062,7 @@
                 subUrlInput.addEventListener('input', (e) => {
                     saveToStorage(e.target.value.trim());
                 });
-
+        
                 window.addEventListener('beforeunload', () => {
                     if (statusCheckTimer) {
                         clearInterval(statusCheckTimer);
@@ -1066,23 +1071,23 @@
                         document.body.removeChild(ariaLiveElement);
                     }
                 });
-
+        
                 logInfo('✨ 欢迎使用订阅转换工具');
                 logInfo('💡 支持快捷键: Ctrl+Enter 转换, Esc 清空输入');
                 logInfo(`📜 已加载 ${CONFIG.CONFIG_OPTIONS.length} 个规则集`);
-
+        
                 console.log('🚀 Aries 订阅转换已初始化');
                 console.log(`📌 API: ${CONFIG.BASE_API}`);
                 console.log(`📌 规则集数量: ${CONFIG.CONFIG_OPTIONS.length}`);
             }
-
+        
             // ===== 启动 =====
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
             } else {
                 init();
             }
-
+        
         })();
     </script>
 </body>
