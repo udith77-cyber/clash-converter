@@ -112,6 +112,31 @@
       opacity: 0.35;
     }
 
+    /* 背景音乐 */
+    .icon-btn.playing {
+      opacity: 1;
+      background: rgba(56, 189, 248, 0.25);
+      border-color: rgba(125, 211, 252, 0.6);
+      animation: musicGlow 2.6s ease-in-out infinite;
+    }
+
+    @keyframes musicGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(56, 189, 248, 0); }
+      50% { box-shadow: 0 0 14px rgba(56, 189, 248, 0.55); }
+    }
+
+    .music-vol {
+      width: 84px;
+      accent-color: #38bdf8;
+      cursor: pointer;
+      display: none;
+      align-self: center;
+    }
+
+    .music-vol.show {
+      display: inline-block;
+    }
+
     .subhead {
       color: #a9d8ef;
       font-size: 0.95rem;
@@ -652,6 +677,8 @@
       <span>🧊 订阅转换</span>
       <span class="badge">GLACIER</span>
       <button class="icon-btn" id="snowToggle" title="开关飘雪效果">❄️</button>
+      <button class="icon-btn off" id="musicToggle" title="开启背景音乐">🎵</button>
+      <input type="range" class="music-vol" id="musicVol" min="0" max="100" value="40" title="音乐音量">
     </h1>
     <div class="subhead">
       ❄️ 输入订阅链接（支持多条，每行一条），选择目标类型和配置模板，一键转换
@@ -1211,6 +1238,155 @@
         }
         if (!snowRaf) tick();
       }
+
+      /* ---------- 背景音乐（Web Audio 合成 · 极光氛围） ---------- */
+      const MUSIC_VOL_KEY = 'glacier_music_vol_v1';
+      const musicToggle = $('musicToggle');
+      const musicVol = $('musicVol');
+      let actx = null;        // AudioContext（首次点击时创建，遵循浏览器自动播放策略）
+      let masterGain = null;
+      let musicOn = false;
+      let schedTimer = null;
+      let nextChordTime = 0;
+      let nextPluckTime = 0;
+      let chordIdx = 0;
+
+      // 缓慢的冰川和声垫 + 随机雪花泛音拨奏
+      const CHORDS = [
+        [110.0, 164.81, 220.0, 277.18, 329.63],  // Am(add9) 系
+        [87.31, 174.61, 220.0, 261.63, 349.23],  // F(maj9) 系
+        [130.81, 196.0, 261.63, 329.63, 392.0],  // C(add9) 系
+        [98.0, 196.0, 246.94, 293.66, 392.0]     // G(add9) 系
+      ];
+      const PLUCK_SCALE = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5, 1174.66, 1318.51]; // 五声音阶
+      const CHORD_LEN = 8, PAD_ATTACK = 2.5, PAD_RELEASE = 3.0;
+
+      function ensureAudio() {
+        if (actx) {
+          if (actx.state === 'suspended') actx.resume();
+          return;
+        }
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) throw new Error('no-audio');
+        actx = new AC();
+        masterGain = actx.createGain();
+        masterGain.gain.value = (parseInt(musicVol.value, 10) || 40) / 100 * 0.5;
+        const lp = actx.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.value = 4200;
+        masterGain.connect(lp);
+        lp.connect(actx.destination);
+      }
+
+      // 铺底和弦垫：三角波 + 缓慢起音/释音，和弦之间无缝衔接
+      function playPad(freqs, t) {
+        const dur = CHORD_LEN + PAD_ATTACK + PAD_RELEASE;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.06, t + PAD_ATTACK);
+        g.gain.setValueAtTime(0.06, t + CHORD_LEN);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + CHORD_LEN + PAD_RELEASE);
+        g.connect(masterGain);
+        freqs.forEach(f => {
+          const o = actx.createOscillator();
+          o.type = 'triangle';
+          o.frequency.value = f * (1 + (Math.random() - 0.5) * 0.0015);
+          o.connect(g);
+          o.start(t);
+          o.stop(t + dur + 0.1);
+        });
+      }
+
+      // 雪花拨奏：正弦高音 + 倍频泛音 + 随机声像
+      function playPluck(freq, t, pan) {
+        const dur = 2.6;
+        const o = actx.createOscillator();
+        o.type = 'sine';
+        o.frequency.value = freq;
+        const o2 = actx.createOscillator();
+        o2.type = 'sine';
+        o2.frequency.value = freq * 2;
+        const g = actx.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.055, t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        const g2 = actx.createGain();
+        g2.gain.value = 0.25;
+        o.connect(g);
+        o2.connect(g2);
+        g2.connect(g);
+        if (actx.createStereoPanner) {
+          const p = actx.createStereoPanner();
+          p.pan.value = pan;
+          g.connect(p);
+          p.connect(masterGain);
+        } else {
+          g.connect(masterGain);
+        }
+        o.start(t);
+        o2.start(t);
+        o.stop(t + dur + 0.1);
+        o2.stop(t + dur + 0.1);
+      }
+
+      // 前视调度：每 500ms 向前排 2s 的音符，避免卡顿
+      function scheduleMusic() {
+        if (!musicOn || !actx) return;
+        const ahead = actx.currentTime + 2.0;
+        while (nextChordTime < ahead) {
+          playPad(CHORDS[chordIdx % CHORDS.length], nextChordTime);
+          chordIdx++;
+          nextChordTime += CHORD_LEN;
+        }
+        while (nextPluckTime < ahead) {
+          const f = PLUCK_SCALE[Math.floor(Math.random() * PLUCK_SCALE.length)];
+          playPluck(f, nextPluckTime, Math.random() * 1.4 - 0.7);
+          nextPluckTime += 1.2 + Math.random() * 2.8;
+        }
+      }
+
+      function setMusic(on) {
+        if (on) {
+          try {
+            ensureAudio();
+          } catch (e) {
+            addLog('当前浏览器不支持音频播放', 'error');
+            return;
+          }
+          musicOn = true;
+          nextChordTime = actx.currentTime + 0.1;
+          nextPluckTime = actx.currentTime + 1.2;
+          schedTimer = setInterval(scheduleMusic, 500);
+          scheduleMusic();
+          musicToggle.classList.remove('off');
+          musicToggle.classList.add('playing');
+          musicToggle.title = '关闭背景音乐';
+          musicVol.classList.add('show');
+          addLog('🎵 背景音乐已开启 · 极光氛围', 'success');
+        } else {
+          musicOn = false;
+          clearInterval(schedTimer);
+          schedTimer = null;
+          if (actx) actx.suspend();
+          musicToggle.classList.add('off');
+          musicToggle.classList.remove('playing');
+          musicToggle.title = '开启背景音乐';
+          musicVol.classList.remove('show');
+          addLog('背景音乐已关闭', 'info');
+        }
+      }
+
+      musicToggle.addEventListener('click', () => setMusic(!musicOn));
+      musicVol.addEventListener('input', () => {
+        const v = parseInt(musicVol.value, 10) / 100;
+        if (masterGain && actx) masterGain.gain.setTargetAtTime(v * 0.5, actx.currentTime, 0.05);
+        try { localStorage.setItem(MUSIC_VOL_KEY, String(musicVol.value)); } catch (e) { /* 忽略 */ }
+      });
+      // 恢复上次的音量偏好
+      try {
+        const sv = localStorage.getItem(MUSIC_VOL_KEY);
+        if (sv !== null) musicVol.value = sv;
+      } catch (e) { /* 忽略 */ }
 
       /* ---------- 初始化 ---------- */
       function init() {
